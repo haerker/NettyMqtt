@@ -8,12 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.csdn.mqtt.nettyServer.BootNettyMqttServerThread;
 
 
-
 @SpringBootApplication
 public class BootNettyMqttApplication implements CommandLineRunner {
     public static void main( String[] args ) {
-        SpringApplication app = new SpringApplication(BootNettyMqttApplication.class);
-        app.run(args);
+        SpringApplication.run(BootNettyMqttApplication.class,args);
     }
 
     @Override

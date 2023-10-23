@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 @ChannelHandler.Sharable
 public class BootNettyMqttChannelInboundHandler extends ChannelInboundHandlerAdapter {
-    public static Map<ChannelHandlerContext, List<String>> subTopicMap = new ConcurrentHashMap<>();
+    public static  Map<ChannelHandlerContext, List<String>> subTopicMap = new ConcurrentHashMap<>();
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
