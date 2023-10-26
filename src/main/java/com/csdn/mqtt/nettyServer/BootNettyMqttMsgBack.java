@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.mqtt.*;
 import org.slf4j.Logger;
@@ -44,6 +46,7 @@ public class BootNettyMqttMsgBack{
      */
 
     public static void publishToClient(ChannelHandlerContext ctx, MqttPublishMessage mqttPublishMessage) {
+        int preReaderIndex = mqttPublishMessage.payload().readerIndex();
         MqttPublishMessage newMqttPublishMessage = MqttMessageBuilders.publish()
                 .topicName(mqttPublishMessage.variableHeader().topicName())
                 .qos(mqttPublishMessage.fixedHeader().qosLevel())
@@ -51,6 +54,7 @@ public class BootNettyMqttMsgBack{
                 .retained(mqttPublishMessage.fixedHeader().isRetain())
                 .build();
         ctx.writeAndFlush(newMqttPublishMessage);
+        mqttPublishMessage.payload().readerIndex(preReaderIndex);
     }
 
     /**

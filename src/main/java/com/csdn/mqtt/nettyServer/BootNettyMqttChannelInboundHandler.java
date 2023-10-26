@@ -38,7 +38,6 @@ public class BootNettyMqttChannelInboundHandler extends ChannelInboundHandlerAda
 
             switch (mqttFixedHeader.messageType()) {
                 case PUBLISH:        //	客户端发布消息
-
                     MqttPublishMessage publishMessage = (MqttPublishMessage) mqttMessage;
                     String pubTopic = publishMessage.variableHeader().topicName();
                     // 检查是否有订阅该主题的客户端
@@ -51,6 +50,7 @@ public class BootNettyMqttChannelInboundHandler extends ChannelInboundHandlerAda
                         }
                     }
                     //	PUBACK报文是对QoS 1等级的PUBLISH报文的响应
+
                     BootNettyMqttMsgBack.puback(channel, mqttMessage);
                     break;
                 case PUBREL:        //	发布释放
@@ -62,7 +62,6 @@ public class BootNettyMqttChannelInboundHandler extends ChannelInboundHandlerAda
                     //	客户端向服务端发送SUBSCRIBE报文用于创建一个或多个订阅，每个订阅注册客户端关心的一个或多个主题。
                     //	为了将应用消息转发给与那些订阅匹配的主题，服务端发送PUBLISH报文给客户端。
                     //	SUBSCRIBE报文也（为每个订阅）指定了最大的QoS等级，服务端根据这个发送应用消息给客户端
-                    // 	to do
                     MqttSubscribeMessage subscribeMessage = (MqttSubscribeMessage) mqttMessage;
                     List<MqttTopicSubscription> topicSubscriptions = subscribeMessage.payload().topicSubscriptions();
                     List<String> topicSubscriptName = new ArrayList<>();
